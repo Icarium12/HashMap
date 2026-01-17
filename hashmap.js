@@ -119,19 +119,13 @@ class HashMap {
     }
 
     length() {
-        if (this.array.length === 0) {
-            return 0
-        }
-        else {
-            let length = 0;
-            this.array.forEach(item => {
-                if (item !== null) {
-                    console.log(length);
-                    length += item.size();
-                }
-            });
-            return length;
-        }
+        let length = 0;
+        this.array.forEach(item => {
+            if (item !== null) {
+                length += item.size();
+            }
+        });
+        return length;
     }
 
     clear() {
@@ -146,7 +140,7 @@ class HashMap {
             const keys = [];
             this.array.forEach(item => {
                 if (item !== null) {
-                    printKeys(item, keys);
+                    printKeys(item.headNode, keys);
                 }
             });
             return keys;
@@ -171,7 +165,7 @@ class HashMap {
             const values = [];
             this.array.forEach(item => {
                 if (item !== null) {
-                    printVals(item, values);
+                    printVals(item.headNode, values);
                 }
             });
             return values;
@@ -196,7 +190,7 @@ class HashMap {
             const entries = [];
             this.array.forEach(item => {
                 if (item !== null) {
-                    getEntries(item, entries);
+                    getEntries(item.headNode, entries);
                 }
                 
             });

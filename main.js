@@ -6,4 +6,4 @@ test.set('apple', 'red');
 test.set('banana', 'yellow');
 test.set('carrot', 'orange');
 
-console.log(test.remove('apple'));
+console.log(test.entries());
