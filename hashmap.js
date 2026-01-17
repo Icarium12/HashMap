@@ -4,7 +4,7 @@ class HashMap {
     constructor(loadFactor) {
         this.loadFactor = loadFactor,
         this.array = new Array(16).fill(null);
-        this.capacity = this.array.length();
+        this.capacity = this.array.length;
     }
 
     checkBounds(index, length) {
@@ -14,7 +14,7 @@ class HashMap {
     }
 
     grow() {
-        if ((this.capacity * this.loadFactor) > this.length()) {
+        if ((this.capacity * this.loadFactor) > this.array.length) {
             const currentArray = this.array;
             const newBucket = new Array(currentArray.length * 2).fill(null);
             for (let i = 0; i < currentArray.length; i++) {
@@ -41,8 +41,9 @@ class HashMap {
         this.checkBounds();
         const node = new Node(key, value);
         if (this.array[hashCode] === null) {
-            this.array[hashCode] = new LinkedList();
-            this.array[hashCode].append(node);
+            this.array[hashCode] = new LinkedList(key, value);
+            // this.array[hashCode].append(node);
+            console.log(this.array[hashCode]);
         }
         else {
             if (this.array[hashCode].key === node.key) {
@@ -61,7 +62,7 @@ class HashMap {
             return null;
         }
         else {
-            return searchList(this.array[hashCode, key]);
+            return searchList(this.array[hashCode].headNode, key);
             function searchList(node, key) {
                 if (node.key === key) {
                     return node.value;
@@ -80,7 +81,7 @@ class HashMap {
             return false;
         }
         else {
-            return searchKey(this.array[hashCode]);
+            return searchKey(this.array[hashCode].headNode, key);
             function searchKey(node, key) {
                 if (node.key === key) {
                     return true;
@@ -99,17 +100,20 @@ class HashMap {
             return false;
         }
         else {
-            return removeKey(this.array[hashCode], key);
+            // console.log(this.array[hashCode]);
+            const index =  removeKey(this.array[hashCode].headNode, key);
+            this.array[hashCode].removeAt(index);
+            return true;
             function removeKey(node, key, count = 0) {
                 if (node.key === key) {
-                    this.array[hashCode].removeAt(count);
-                    return true;
+                    console.log(count);
+                    return count;
                 }
                 else if (node.nextNode === null) {
                     return;
                 }
                 count++
-                return searchKey(node.nextNode, key);
+                return removeKey(node.nextNode, key, count);
             }  
         }
     }
@@ -119,10 +123,11 @@ class HashMap {
             return 0
         }
         else {
-            let length;
+            let length = 0;
             this.array.forEach(item => {
                 if (item !== null) {
-                    length += item.size;
+                    console.log(length);
+                    length += item.size();
                 }
             });
             return length;
@@ -130,7 +135,7 @@ class HashMap {
     }
 
     clear() {
-        this.array = new Array(16);
+        this.array = new Array(16).fill(null);
     }
 
     keys() {

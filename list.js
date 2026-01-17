@@ -1,6 +1,6 @@
 class LinkedList {
-    constructor() {
-        this.headNode = new Node();
+    constructor(key, value) {
+        this.headNode = new Node(key, value);
     }
 
     append(value) {
@@ -223,7 +223,7 @@ class LinkedList {
 
 class Node {
     constructor(key = null, value = null, nextNode = null) {
-        this.key = key
+        this.key = key;
         this.value = value;
         this.nextNode = nextNode;
     }
