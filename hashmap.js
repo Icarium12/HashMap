@@ -9,6 +9,7 @@ class HashMap {
 
     checkBounds(index, length) {
         if(index < 0 || index >= length) {
+            console.log("ran");
             throw new Error("Trying to access index out of bounds");
         }
     }
@@ -21,6 +22,7 @@ class HashMap {
                 newBucket[i] = currentArray[i];
             }
             this.array = newBucket; 
+            console.log("ran");
         }
     }
 
@@ -42,15 +44,13 @@ class HashMap {
         const node = new Node(key, value);
         if (this.array[hashCode] === null) {
             this.array[hashCode] = new LinkedList(key, value);
-            // this.array[hashCode].append(node);
-            console.log(this.array[hashCode]);
         }
         else {
-            if (this.array[hashCode].key === node.key) {
-                this.array[hashCode].value = node.value;
+            if (this.array[hashCode].headNode.key === node.key) {
+                this.array[hashCode].headNode.value = node.value;
             }
-            else if(this.array[hashCode].key !== node.key) {
-                this.array[hashCode].nextNode = node;
+            else if(this.array[hashCode].headNode.key !== node.key) {
+                this.array[hashCode].headNode.nextNode = node;
             }
         }
     }
@@ -197,13 +197,13 @@ class HashMap {
             return entries;
 
 
-            function getEntries(node, entries = [], entry = `${node.key}, ${node.value}`) {
+            function getEntries(node, entries) {
                 if (node.nextNode === null) {
-                    entries.push(entry);
+                    entries.push(`${node.key}, ${node.value}`);
                     return entries;
                 }
-                entries.push(entry);
-                return(node.nextNode, entries);
+                entries.push(`${node.key}, ${node.value}`);
+                return getEntries(node.nextNode, entries);
             }
         }
     }
