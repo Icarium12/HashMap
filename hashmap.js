@@ -14,18 +14,6 @@ class HashMap {
         }
     }
 
-    grow() {
-        if ((this.capacity * this.loadFactor) > this.array.length) {
-            const currentArray = this.array;
-            const newBucket = new Array(currentArray.length * 2).fill(null);
-            for (let i = 0; i < currentArray.length; i++) {
-                newBucket[i] = currentArray[i];
-            }
-            this.array = newBucket; 
-            console.log("ran");
-        }
-    }
-
     hash(key) {
         let hashCode = 0;
 
@@ -38,9 +26,8 @@ class HashMap {
     }
 
     set(key, value) {
-        this.grow();
         const hashCode = this.hash(key);
-        this.checkBounds();
+        this.checkBounds(hashCode, this.array.length);
         const node = new Node(key, value);
         if (this.array[hashCode] === null) {
             this.array[hashCode] = new LinkedList(key, value);
@@ -52,6 +39,18 @@ class HashMap {
             else if(this.array[hashCode].headNode.key !== node.key) {
                 this.array[hashCode].headNode.nextNode = node;
             }
+        }
+
+
+        if (Math.round(this.capacity * this.loadFactor) <= this.length()) {
+            const currentArray = this.array;
+            const newBucket = new Array(currentArray.length * 2).fill(null);
+            currentArray.forEach(item => {
+                const index = currentArray.indexOf(item);
+                newBucket[index] = item;
+            })
+            this.array = newBucket; 
+            this.capacity = this.array.length;
         }
     }
 
@@ -77,6 +76,7 @@ class HashMap {
 
     has(key) {
         const hashCode = this.hash(key);
+        this.checkBounds(hashCode, this.array.length);
         if (this.array[hashCode] === null) {
             return false;
         }
@@ -96,17 +96,16 @@ class HashMap {
 
     remove(key) {
         const hashCode = this.hash(key);
+        this.checkBounds(hashCode, this.array.length);
         if (this.array[hashCode] === null) {
             return false;
         }
         else {
-            // console.log(this.array[hashCode]);
             const index =  removeKey(this.array[hashCode].headNode, key);
             this.array[hashCode].removeAt(index);
             return true;
             function removeKey(node, key, count = 0) {
                 if (node.key === key) {
-                    console.log(count);
                     return count;
                 }
                 else if (node.nextNode === null) {

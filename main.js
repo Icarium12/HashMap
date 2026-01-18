@@ -21,6 +21,10 @@ test.set('lion', 'golden');
 
 // test.set('new', 'value')
 // test.set('hat', 'black');
+test.set('moon', 'silver');
+
 
 console.log(test.entries());
-console.log(test.has('lion'))
+console.log(test.capacity);
+
+console.log(test.values());
