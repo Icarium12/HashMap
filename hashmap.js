@@ -132,7 +132,7 @@ class HashMap {
     }
 
     keys() {
-        if (this.array.length === 0) {
+        if (this.length() === 0) {
             return [];
         }
         else {
@@ -157,7 +157,7 @@ class HashMap {
     }
 
     values() {
-        if (this.array.length === 0) {
+        if (this.length() === 0) {
             return [];
         }
         else {
@@ -182,7 +182,7 @@ class HashMap {
     }
 
     entries() {
-        if (this.array.length === 0) {
+        if (this.length() === 0) {
             return [];
         }
         else {

@@ -16,15 +16,9 @@ test.set('jacket', 'blue');
 test.set('kite', 'pink');
 test.set('lion', 'golden');
 
-// test.set('apple', 'name');
-// test.set('dog', 'changed');
-
-// test.set('new', 'value')
-// test.set('hat', 'black');
 test.set('moon', 'silver');
 
 
 console.log(test.entries());
-console.log(test.capacity);
 
 console.log(test.values());
